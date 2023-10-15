@@ -19,7 +19,6 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GAR_LOCATION: us-central1 # TODO: update region of the Artifact Registry
-  GKE_ZONE: us-central1-c   # TODO: update to cluster zone
   REPOSITORY: samples # TODO: update to Artifact Registry docker repository
   IMAGE: static-site
 
