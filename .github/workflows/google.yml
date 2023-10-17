@@ -39,9 +39,20 @@ jobs:
 
     # Alternative option - authentication via credentials json
     - id: 'auth'
-      uses: 'google-github-actions/auth@v0'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v1'
       with:
         credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+        token_format: 'access_token'
+        # Either user Workload Identity Federation or Service Account Keys. See
+        # above more more examples
+
+    # This example uses the docker login action
+    - uses: 'docker/login-action@v1'
+      with:
+        registry: '${{ GAR_LOCATION }}-docker.pkg.dev' # or REGION-docker.pkg.dev
+        username: 'oauth2accesstoken'
+        password: '${{ steps.auth.outputs.access_token }}'
 
     - name: Docker configuration
       run: |-
@@ -64,3 +75,11 @@ jobs:
       run: |-
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
+    - id: docker-push-tagged
+      name: Tag Docker image and push to Google Artifact Registry
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: |
+          us-central1-docker.pkg.dev/saifuls-playground/gitaction/rasel_web:latest
+          us-central1-docker.pkg.dev/saifuls-playground/gitaction/rasel_web:latest
