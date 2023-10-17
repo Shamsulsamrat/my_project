@@ -84,9 +84,4 @@ jobs:
     #       us-central1-docker.pkg.dev/saifuls-playground/gitaction/rasel_web:latest
     #       us-central1-docker.pkg.dev/saifuls-playground/gitaction/rasel_web:latest
     # Deploy the Docker image to the GKE cluster
-    - name: Deploy
-      run: |-
-        # replacing the image name in the k8s template
-        ./kustomize edit set image us-central1-docker.pkg.dev/saifuls-playground/gitaction/rasel_web:latest=$us-central1-docker.pkg.dev/saifuls-playground/gitaction/rasel_web:$GITHUB_SHA
-        ./kustomize build . | kubectl apply -f -
-        kubectl rollout status deployment/rasel_web
+   
