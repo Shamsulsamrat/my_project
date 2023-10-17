@@ -21,7 +21,7 @@ env:
   GAR_LOCATION: us-central1 # TODO: update region of the Artifact Registry
   DEPLOYMENT_NAME: gitaction # TODO: update to deployment name
   REPOSITORY: gitaction # TODO: update to Artifact Registry docker repository
-  IMAGE: static-site
+  IMAGE: rasel_web
 
 jobs:
   setup-build-publish-deploy:
